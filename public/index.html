@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Surat City Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar { transition: all 0.3s ease; }
+        .hero-slide { background-size: cover; background-position: center; background-repeat: no-repeat; }
+        .btn-primary {
+            background: linear-gradient(135deg, #00bcd4, #0097a7);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 188, 212, 0.3);
+        }
+        .btn-secondary {
+            border: 2px solid #00bcd4;
+            color: #00bcd4;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(0, 188, 212, 0.05);
+            transform: translateY(-3px);
+        }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 188, 212, 0.1);
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.1);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+        }
+
+        /* Custom Styles for Hero Slider */
+        .hero-slider-container {
+            position: relative;
+            height: 80vh;
+            max-height: 600px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-slider-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .slider-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .slider-nav-btn:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-nav-btn.prev {
+            left: 20px;
+        }
+
+        .slider-nav-btn.next {
+            right: 20px;
+        }
+
+        .hero-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-cyan-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <button id="hambtn" class="md:hidden text-cyan-800 hover:text-cyan-600 focus:outline-none mr-4 p-2 rounded-lg hover:bg-cyan-50">
+                        <i data-feather="menu"></i>
+                    </button>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyan-500 to-cyan-700 rounded-lg flex items-center justify-center mr-3">
+                            <i data-feather="droplet" class="text-white w-5 h-5"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-cyan-900">Smart Surat</span>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-cyan-600 font-semibold border-b-2 border-cyan-500">Home</a>
+                    <a href="raise-complaint.html" class="text-cyan-800 hover:text-cyan-600 font-medium">Raise Complaint</a>
+                    <a href="dashboard.html" class="text-cyan-800 hover:text-cyan-600 font-medium">Dashboard</a>
+                    <a href="about.html" class="text-cyan-800 hover:text-cyan-600 font-medium">About</a>
+                </nav>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="auth.html" class="text-cyan-800 hover:text-cyan-600 font-medium p-2 rounded-lg hover:bg-cyan-50">
+                        <i data-feather="user" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full w-72 bg-white shadow-2xl z-50 transition-transform duration-300 ease-in-out border-r border-cyan-100">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-cyan-100">
+            <h2 class="text-xl font-bold text-cyan-900">Smart Surat Portal</h2>
+            <button id="closeSidebar" class="text-cyan-500 hover:text-cyan-700 focus:outline-none p-2 rounded-lg hover:bg-cyan-50">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <nav class="p-6">
+            <ul class="space-y-4">
+                <li><a href="index.html" class="flex items-center px-4 py-3 rounded-lg bg-cyan-50 text-cyan-700 font-medium"><i data-feather="home" class="mr-4 w-5 h-5"></i> Home</a></li>
+                <li><a href="raise-complaint.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="edit-3" class="mr-4 w-5 h-5"></i> Raise Complaint</a></li>
+                <li><a href="dashboard.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="bar-chart-2" class="mr-4 w-5 h-5"></i> Dashboard</a></li>
+                <li><a href="about.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="info" class="mr-4 w-5 h-5"></i> About</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-30 z-40"></div>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-cyan-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-white bg-opacity-20"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="text-center" data-aos="fade-up">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Welcome to Smart Surat City Portal</h1>
+                <p class="text-xl md:text-2xl text-cyan-800 mb-12 max-w-3xl mx-auto">Empowering citizens to report and track civic issues like garbage management, streetlights, water supply, and drainage. Together, building a smarter Surat.</p>
+
+                <!-- Hero Slideshow -->
+                <div class="hero-slider-container mx-auto max-w-6xl mb-8 relative">
+                    <img id="currentSlideImage" src="images/Slide1.jpg" alt="Community Cleanliness Drive" class="w-full h-full">
+
+                    <!-- Navigation Buttons -->
+                    <button id="prevSlide" class="slider-nav-btn prev">
+                        <i data-feather="chevron-left" class="w-6 h-6 text-cyan-800"></i>
+                    </button>
+                    <button id="nextSlide" class="slider-nav-btn next">
+                        <i data-feather="chevron-right" class="w-6 h-6 text-cyan-800"></i>
+                    </button>
+
+                    <!-- Image Caption -->
+                    <div class="hero-content">
+                        <h3 id="slideTitle">Community Cleanliness Drive</h3>
+                        <p id="slideDesc">Residents unite to keep Surat clean and beautiful.</p>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                    <a href="raise-complaint.html" class="btn-primary text-white font-semibold py-4 px-8 rounded-xl text-lg shadow-lg">
+                        <i data-feather="edit-2" class="inline mr-2 w-5 h-5"></i> File a Complaint
+                    </a>
+                    <a href="dashboard.html" class="btn-secondary font-semibold py-4 px-8 rounded-xl text-lg">
+                        <i data-feather="bar-chart-2" class="inline mr-2 w-5 h-5"></i> View Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-cyan-900 mb-4">Key Features</h2>
+                <p class="text-xl text-cyan-700 max-w-2xl mx-auto">Discover how Smart Surat simplifies civic engagement and improves city services.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="feature-card bg-cyan-50 p-8 rounded-2xl text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-feather="edit-3" class="text-white w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-cyan-900 mb-4">Easy Complaint Filing</h3>
+                    <p class="text-cyan-700">Report issues with photos and details in minutes. Track status in real-time.</p>
+                </div>
+                <div class="feature-card bg-cyan-50 p-8 rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-feather="check-circle" class="text-white w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-cyan-900 mb-4">Real-Time Updates</h3>
+                    <p class="text-cyan-700">Receive notifications on complaint progress from authorities.</p>
+                </div>
+                <div class="feature-card bg-cyan-50 p-8 rounded-2xl text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-feather="bar-chart-2" class="text-white w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-cyan-900 mb-4">Analytics Dashboard</h3>
+                    <p class="text-cyan-700">View city-wide stats, trends, and your personal complaint history.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-cyan-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center mr-3">
+                            <i data-feather="droplet" class="text-white w-5 h-5"></i>
+                        </div>
+                        <span class="text-xl font-bold">Smart Surat</span>
+                    </div>
+                    <p class="text-cyan-200">Building a smarter, cleaner Surat through citizen empowerment and efficient services.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-cyan-200">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="raise-complaint.html" class="hover:text-white transition-colors">Raise Complaint</a></li>
+                        <li><a href="dashboard.html" class="hover:text-white transition-colors">Dashboard</a></li>
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-cyan-200">
+                        <li><a href="#" class="hover:text-white transition-colors">Garbage Management</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Streetlights</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Water Supply</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Drainage</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <p class="text-cyan-200 mb-2">Surat Municipal Corporation</p>
+                    <p class="text-cyan-200">Email: support@smartsurat.gov.in</p>
+                    <p class="text-cyan-200">Phone: +91 261-1234567</p>
+                </div>
+            </div>
+            <div class="border-t border-cyan-800 mt-8 pt-8 text-center text-cyan-300">
+                <p>&copy; 2025 Smart Surat City Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 800, once: true });
+        feather.replace();
+
+        // Mobile menu toggle
+        const hambtn = document.getElementById('hambtn');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const overlay = document.getElementById('overlay');
+
+        hambtn?.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        });
+
+        closeSidebar?.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        overlay?.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        // Hero slideshow with manual controls
+        const slides = [
+            {
+                image: "images/Slide1.jpg",
+                title: "Community Cleanliness Drive",
+                desc: "Residents unite to keep Surat clean and beautiful."
+            },
+            {
+                image: "images/Slide2.jpg",
+                title: "Pride in Our Streets",
+                desc: "Every citizen plays a vital role in maintaining our city's hygiene."
+            },
+            {
+                image: "images/Slide3.jpg",
+                title: "Together We Build a Cleaner Surat",
+                desc: "Join hands with neighbors and authorities for a healthier, greener city."
+            },
+            {
+                image: "images/Slide4.jpg",
+                title: "A Wave of Cleanliness",
+                desc: "A vibrant group of women lead the charge in keeping our neighborhoods spotless."
+            },
+            {
+                image: "images/Slide5.jpg",
+                title: "United for a Cleaner City",
+                desc: "A collective effort from dedicated citizens ensures a brighter, healthier Surat."
+            }
+        ];
+
+        const currentSlideImage = document.getElementById('currentSlideImage');
+        const slideTitle = document.getElementById('slideTitle');
+        const slideDesc = document.getElementById('slideDesc');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            const slide = slides[index];
+            currentSlideImage.src = slide.image;
+            slideTitle.textContent = slide.title;
+            slideDesc.textContent = slide.desc;
+        }
+
+        // Initial slide
+        showSlide(currentSlide);
+
+        // Auto-advance every 5 seconds
+        let slideInterval = setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }, 5000);
+
+        // Manual navigation
+        prevBtn?.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+            slideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 5000);
+        });
+
+        nextBtn?.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+            slideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

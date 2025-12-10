@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard - Smart Surat City Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar { transition: all 0.3s ease; }
+        .btn-primary {
+            background: linear-gradient(135deg, #00bcd4, #0097a7);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 188, 212, 0.3);
+        }
+        .stat-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e0f7fa;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.1);
+        }
+        .table-row {
+            transition: background-color 0.2s ease;
+        }
+        .table-row:hover {
+            background-color: rgba(0, 188, 212, 0.05);
+        }
+        .status-pending { @apply bg-yellow-100 text-yellow-800; }
+        .status-resolved { @apply bg-green-100 text-green-800; }
+        .status-in-progress { @apply bg-blue-100 text-blue-800; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-cyan-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <button id="hambtn" class="md:hidden text-cyan-800 hover:text-cyan-600 focus:outline-none mr-4 p-2 rounded-lg hover:bg-cyan-50">
+                        <i data-feather="menu"></i>
+                    </button>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyan-500 to-cyan-700 rounded-lg flex items-center justify-center mr-3">
+                            <i data-feather="bar-chart-2" class="text-white w-5 h-5"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-cyan-900">Dashboard</span>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-cyan-800 hover:text-cyan-600 font-medium">Home</a>
+                    <a href="raise-complaint.html" class="text-cyan-800 hover:text-cyan-600 font-medium">Raise Complaint</a>
+                    <a href="dashboard.html" class="text-cyan-600 font-semibold border-b-2 border-cyan-500">Dashboard</a>
+                    <a href="about.html" class="text-cyan-800 hover:text-cyan-600 font-medium">About</a>
+                </nav>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="profile.html" class="text-cyan-800 hover:text-cyan-600 font-medium p-2 rounded-lg hover:bg-cyan-50">
+                        <i data-feather="user" class="w-5 h-5"></i>
+                    </a>
+                    <button id="logoutBtn" class="btn-primary text-white font-semibold py-2 px-4 rounded-lg flex items-center">
+                        <i data-feather="log-out" class="w-4 h-4 mr-2"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full w-72 bg-white shadow-2xl z-50 transition-transform duration-300 ease-in-out border-r border-cyan-100">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-cyan-100">
+            <h2 class="text-xl font-bold text-cyan-900">Smart Surat Portal</h2>
+            <button id="closeSidebar" class="text-cyan-500 hover:text-cyan-700 focus:outline-none p-2 rounded-lg hover:bg-cyan-50">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <nav class="p-6">
+            <ul class="space-y-4">
+                <li><a href="index.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="home" class="mr-4 w-5 h-5"></i> Home</a></li>
+                <li><a href="raise-complaint.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="edit-3" class="mr-4 w-5 h-5"></i> Raise Complaint</a></li>
+                <li><a href="dashboard.html" class="flex items-center px-4 py-3 rounded-lg bg-cyan-50 text-cyan-700 font-semibold"><i data-feather="bar-chart-2" class="mr-4 w-5 h-5"></i> Dashboard</a></li>
+                <li><a href="profile.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="user" class="mr-4 w-5 h-5"></i> Profile</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-30 z-40"></div>
+
+    <!-- Main Dashboard Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8" data-aos="fade-down">
+            <h1 class="text-3xl md:text-4xl font-bold text-cyan-900 mb-2">Your Dashboard</h1>
+            <p class="text-xl text-cyan-700">Track and manage your civic complaints in real-time.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <section class="grid md:grid-cols-3 gap-6 mb-8" data-aos="fade-up">
+            <div class="stat-card bg-white p-6 rounded-2xl shadow-lg border">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-cyan-700 font-medium">Total Complaints</p>
+                        <p class="text-3xl font-bold text-cyan-900" id="totalComplaints">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center">
+                        <i data-feather="file-text" class="text-cyan-600 w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card bg-white p-6 rounded-2xl shadow-lg border">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-cyan-700 font-medium">Pending</p>
+                        <p class="text-3xl font-bold text-yellow-600" id="pendingComplaints">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                        <i data-feather="clock" class="text-yellow-600 w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card bg-white p-6 rounded-2xl shadow-lg border">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-cyan-700 font-medium">Resolved</p>
+                        <p class="text-3xl font-bold text-green-600" id="resolvedComplaints">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                        <i data-feather="check-circle" class="text-green-600 w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complaints Table -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+            <div class="p-6 border-b border-cyan-100">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-cyan-900">All Complaints</h2>
+                    <a href="raise-complaint.html" class="btn-primary text-white font-semibold py-2 px-4 rounded-xl flex items-center">
+                        <i data-feather="plus" class="w-4 h-4 mr-2"></i> New Complaint
+                    </a>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-cyan-50">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-cyan-800 uppercase tracking-wider">#</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-cyan-800 uppercase tracking-wider">Title</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-cyan-800 uppercase tracking-wider">Description</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-cyan-800 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-cyan-800 uppercase tracking-wider">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="complaintsTable" class="divide-y divide-cyan-100">
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-6 border-t border-cyan-100 bg-cyan-50">
+                <p id="noComplaints" class="text-center text-cyan-700 py-8 hidden">No complaints found. <a href="raise-complaint.html" class="text-cyan-600 hover:underline">Raise your first complaint</a>.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-cyan-900 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Smart Surat City Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 800, once: true });
+        feather.replace();
+
+        // Mobile menu toggle
+        const hambtn = document.getElementById('hambtn');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const overlay = document.getElementById('overlay');
+
+        hambtn?.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        });
+
+        closeSidebar?.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        overlay?.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        // Auth guard
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            window.location.href = 'auth.html';
+        }
+
+        // Logout
+        const logoutBtn = document.getElementById('logoutBtn');
+        logoutBtn?.addEventListener('click', () => {
+            localStorage.removeItem('user');
+            window.location.href = 'auth.html';
+        });
+
+        // DOM elements
+        const tableBody = document.getElementById("complaintsTable");
+        const noComplaintsMsg = document.getElementById("noComplaints");
+        const totalEl = document.getElementById("totalComplaints");
+        const pendingEl = document.getElementById("pendingComplaints");
+        const resolvedEl = document.getElementById("resolvedComplaints");
+
+        // Fetch complaints from backend
+        async function loadComplaints() {
+            try {
+                const response = await fetch(`/api/complaints/user/${user.id}`);
+                if (!response.ok) throw new Error('Failed to load complaints');
+                const complaints = await response.json();
+
+                // Update stats
+                totalEl.textContent = complaints.length;
+                const pending = complaints.filter(c => c.status === 'pending').length;
+                const resolved = complaints.filter(c => c.status === 'resolved').length;
+                pendingEl.textContent = pending;
+                resolvedEl.textContent = resolved;
+
+                // Render table
+                if (complaints.length === 0) {
+                    noComplaintsMsg.classList.remove('hidden');
+                    tableBody.innerHTML = '';
+                } else {
+                    noComplaintsMsg.classList.add('hidden');
+                    tableBody.innerHTML = complaints.map(c => {
+                        let statusClass = 'status-pending';
+                        let displayStatus = 'Pending';
+                        if (c.status === 'resolved') {
+                            statusClass = 'status-resolved';
+                            displayStatus = 'Resolved';
+                        } else if (c.status === 'in-progress') {
+                            statusClass = 'status-in-progress';
+                            displayStatus = 'In Progress';
+                        }
+
+                        return `
+                            <tr class="table-row">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-cyan-900">${c.id}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-cyan-800">
+                                    <a href="complaint-detail.html?id=${c.id}" class="text-cyan-600 hover:underline">${c.title}</a>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-cyan-700 max-w-xs truncate">${c.description}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusClass} uppercase">
+                                        ${displayStatus}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-cyan-700">
+                                    ${new Date(c.createdAt).toLocaleString()}
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                noComplaintsMsg.textContent = 'Failed to load complaints. Please try again later.';
+                noComplaintsMsg.classList.remove('hidden');
+                tableBody.innerHTML = '';
+            }
+        }
+
+        // Load data on page load
+        loadComplaints();
+    </script>
+</body>
+</html>

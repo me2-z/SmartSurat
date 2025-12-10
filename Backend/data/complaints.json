@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "Garbage",
+    "description": "sdsd",
+    "userId": 2,
+    "status": "pending",
+    "createdAt": "2025-10-12T09:25:56.784Z",
+    "photoUrl": null
+  },
+  {
+    "id": 2,
+    "title": "Streetlight",
+    "description": "ssd",
+    "userId": 2,
+    "status": "resolved",
+    "createdAt": "2025-10-15T08:05:13.141Z",
+    "photoUrl": "blob:http://localhost:3000/81f497d0-a023-4433-a2ec-a4a36a431461"
+  },
+  {
+    "id": 3,
+    "title": "Garbage, Streetlight, Water, Drainage",
+    "description": "sdsds",
+    "userId": 2,
+    "status": "resolved",
+    "createdAt": "2025-11-20T11:38:52.665Z",
+    "photoUrl": "blob:http://localhost:3000/4e4bf588-7e03-48b3-88fa-da25ab37077c"
+  }
+]

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raise Complaint - Smart Surat City Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar { transition: all 0.3s ease; }
+        .btn-primary {
+            background: linear-gradient(135deg, #00bcd4, #0097a7);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 188, 212, 0.3);
+        }
+        .btn-secondary {
+            border: 2px solid #00bcd4;
+            color: #00bcd4;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(0, 188, 212, 0.05);
+            transform: translateY(-3px);
+        }
+        .issue-card {
+            transition: all 0.3s ease;
+            border: 1px solid #e0f7fa;
+        }
+        .issue-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 188, 212, 0.1);
+            border-color: #b2ebf2;
+        }
+        .issue-card input:checked + .issue-label {
+            background: #e0f7fa;
+            border-color: #00bcd4;
+            color: #0097a7;
+        }
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        .preview-img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 188, 212, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-cyan-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <button id="hambtn" class="md:hidden text-cyan-800 hover:text-cyan-600 focus:outline-none mr-4 p-2 rounded-lg hover:bg-cyan-50">
+                        <i data-feather="menu"></i>
+                    </button>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyan-500 to-cyan-700 rounded-lg flex items-center justify-center mr-3">
+                            <i data-feather="edit-3" class="text-white w-5 h-5"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-cyan-900">Raise Complaint</span>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-cyan-800 hover:text-cyan-600 font-medium">Home</a>
+                    <a href="raise-complaint.html" class="text-cyan-600 font-semibold border-b-2 border-cyan-500">Raise Complaint</a>
+                    <a href="dashboard.html" class="text-cyan-800 hover:text-cyan-600 font-medium">Dashboard</a>
+                    <a href="about.html" class="text-cyan-800 hover:text-cyan-600 font-medium">About</a>
+                </nav>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="profile.html" class="text-cyan-800 hover:text-cyan-600 font-medium p-2 rounded-lg hover:bg-cyan-50">
+                        <i data-feather="user" class="w-5 h-5"></i>
+                    </a>
+                    <button id="logoutBtn" class="btn-primary text-white font-semibold py-2 px-4 rounded-lg flex items-center">
+                        <i data-feather="log-out" class="w-4 h-4 mr-2"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full w-72 bg-white shadow-2xl z-50 transition-transform duration-300 ease-in-out border-r border-cyan-100">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-cyan-100">
+            <h2 class="text-xl font-bold text-cyan-900">Smart Surat Portal</h2>
+            <button id="closeSidebar" class="text-cyan-500 hover:text-cyan-700 focus:outline-none p-2 rounded-lg hover:bg-cyan-50">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <nav class="p-6">
+            <ul class="space-y-4">
+                <li><a href="index.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="home" class="mr-4 w-5 h-5"></i> Home</a></li>
+                <li><a href="raise-complaint.html" class="flex items-center px-4 py-3 rounded-lg bg-cyan-50 text-cyan-700 font-semibold"><i data-feather="edit-3" class="mr-4 w-5 h-5"></i> Raise Complaint</a></li>
+                <li><a href="dashboard.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="bar-chart-2" class="mr-4 w-5 h-5"></i> Dashboard</a></li>
+                <li><a href="profile.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="user" class="mr-4 w-5 h-5"></i> Profile</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-30 z-40"></div>
+
+    <!-- Main Content -->
+    <main class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-12" data-aos="fade-up">
+            <h1 class="text-3xl md:text-4xl font-bold text-cyan-900 mb-4">File a New Complaint</h1>
+            <p class="text-xl text-cyan-700 max-w-2xl mx-auto">Report civic issues to help improve our city. Select the category, add details, and optionally attach a photo.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+            <form id="complaintForm" class="p-8">
+                <!-- Issue Selection -->
+                <div class="mb-8">
+                    <label class="block text-sm font-semibold text-cyan-800 mb-4">Select Issue Type</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <label class="issue-card flex items-center p-4 border rounded-xl cursor-pointer">
+                            <input type="checkbox" name="issue" value="Garbage" class="mr-3 h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-cyan-300 rounded">
+                            <div class="flex items-center">
+                                <i data-feather="trash-2" class="w-5 h-5 text-cyan-600 mr-3"></i>
+                                <span class="text-cyan-800 font-medium">Garbage Management</span>
+                            </div>
+                        </label>
+                        <label class="issue-card flex items-center p-4 border rounded-xl cursor-pointer">
+                            <input type="checkbox" name="issue" value="Streetlight" class="mr-3 h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-cyan-300 rounded">
+                            <div class="flex items-center">
+                                <i data-feather="zap" class="w-5 h-5 text-cyan-600 mr-3"></i>
+                                <span class="text-cyan-800 font-medium">Streetlights</span>
+                            </div>
+                        </label>
+                        <label class="issue-card flex items-center p-4 border rounded-xl cursor-pointer">
+                            <input type="checkbox" name="issue" value="Water" class="mr-3 h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-cyan-300 rounded">
+                            <div class="flex items-center">
+                                <i data-feather="droplet" class="w-5 h-5 text-cyan-600 mr-3"></i>
+                                <span class="text-cyan-800 font-medium">Water Supply</span>
+                            </div>
+                        </label>
+                        <label class="issue-card flex items-center p-4 border rounded-xl cursor-pointer">
+                            <input type="checkbox" name="issue" value="Drainage" class="mr-3 h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-cyan-300 rounded">
+                            <div class="flex items-center">
+                                <i data-feather="activity" class="w-5 h-5 text-cyan-600 mr-3"></i>
+                                <span class="text-cyan-800 font-medium">Drainage</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="mb-8">
+                    <label class="block text-sm font-semibold text-cyan-800 mb-2">Details (optional)</label>
+                    <textarea id="message" rows="4" placeholder="Describe the issue in detail (e.g., location, severity)..." class="w-full px-4 py-3 border border-cyan-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent resize-none"></textarea>
+                </div>
+
+                <!-- Photo Upload -->
+                <div class="mb-8">
+                    <label class="block text-sm font-semibold text-cyan-800 mb-2">Attach Photo (optional)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="photo" accept="image/*" class="hidden">
+                        <label for="photo" class="inline-flex items-center px-4 py-3 border border-dashed border-cyan-300 rounded-xl cursor-pointer hover:border-cyan-500 hover:bg-cyan-50 transition-colors">
+                            <i data-feather="image" class="w-5 h-5 text-cyan-600 mr-2"></i>
+                            <span class="text-cyan-800 font-medium">Choose Photo</span>
+                        </label>
+                    </div>
+                    <div id="photoPreview" class="mt-4 hidden">
+                        <img id="previewImg" class="preview-img" alt="Preview">
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-end">
+                    <button type="reset" class="btn-secondary font-semibold py-3 px-6 rounded-xl">Reset</button>
+                    <button type="submit" class="btn-primary text-white font-semibold py-3 px-6 rounded-xl flex items-center justify-center">
+                        <i data-feather="send" class="w-4 h-4 mr-2"></i> Submit Complaint
+                    </button>
+                </div>
+
+                <div id="response" class="mt-6 p-4 rounded-xl hidden"></div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-cyan-900 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Smart Surat City Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 800, once: true });
+        feather.replace();
+        
+        // Mobile menu toggle
+        const hambtn = document.getElementById('hambtn');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const overlay = document.getElementById('overlay');
+
+        hambtn?.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        });
+
+        closeSidebar?.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        overlay?.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        // Auth guard
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            window.location.href = 'auth.html';
+        }
+
+        // User button
+        const userBtn = document.getElementById('userBtn');
+        if (userBtn) {
+            userBtn.title = user.name;
+        }
+
+        // Logout
+        const logoutBtn = document.getElementById('logoutBtn');
+        logoutBtn?.addEventListener('click', () => {
+            localStorage.removeItem('user');
+            window.location.href = 'auth.html';
+        });
+
+        // Photo preview
+        const photoInput = document.getElementById('photo');
+        const photoPreview = document.getElementById('photoPreview');
+        const previewImg = document.getElementById('previewImg');
+
+        photoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImg.src = e.target.result;
+                    photoPreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                photoPreview.classList.add('hidden');
+            }
+        });
+
+        // Form submission
+        const form = document.getElementById('complaintForm');
+        const responseDiv = document.getElementById('response');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const selectedIssues = Array.from(document.querySelectorAll('input[name="issue"]:checked')).map(cb => cb.value);
+            if (selectedIssues.length === 0) {
+                showResponse('Please select at least one issue type.', 'error');
+                return;
+            }
+
+            const message = document.getElementById('message').value.trim();
+            const photoFile = photoInput.files[0];
+
+            // Create complaint data
+            const complaintData = {
+                title: selectedIssues.join(', '),
+                description: message || 'No additional details provided.',
+                userId: user.id,
+                photoUrl: photoFile ? URL.createObjectURL(photoFile) : null // 👈 SEND PHOTO TO BACKEND
+            };
+
+            try {
+                const response = await fetch('/api/complaints', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(complaintData)
+                });
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showResponse('Complaint submitted successfully! Redirecting to dashboard...', 'success');
+                    setTimeout(() => window.location.href = 'dashboard.html', 2000);
+                } else {
+                    showResponse(result.error || 'Failed to submit complaint', 'error');
+                }
+            } catch (error) {
+                showResponse('Network error. Please try again.', 'error');
+            }
+        });
+
+        function showResponse(message, type) {
+            responseDiv.textContent = message;
+            responseDiv.className = `mt-6 p-4 rounded-xl ${type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`;
+            responseDiv.classList.remove('hidden');
+        }
+
+        form.addEventListener('reset', () => {
+            photoPreview.classList.add('hidden');
+            responseDiv.classList.add('hidden');
+            document.querySelectorAll('input[name="issue"]').forEach(cb => cb.checked = false);
+        });
+    </script>
+</body>
+</html>

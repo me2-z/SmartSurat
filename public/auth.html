@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Surat | Login / Signup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+    }
+    .auth-wrapper { perspective: 1200px; }
+    .auth-card {
+      position: relative;
+      width: 100%;
+      min-height: 480px;
+      transform-style: preserve-3d;
+      transition: transform .8s cubic-bezier(.4,.2,.2,1);
+    }
+    .auth-card.flipped { transform: rotateY(180deg); }
+    .auth-face {
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      backface-visibility:hidden;
+      background:white;
+      border-radius:1.5rem;
+      box-shadow:0 20px 50px rgba(0, 188, 212, 0.2);
+      padding:2.5rem 2rem;
+      border: 1px solid #e0f7fa;
+    }
+    .auth-face.back { transform: rotateY(180deg); }
+    .input-field {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #b2ebf2;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #00bcd4;
+      box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.2);
+    }
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #00bcd4, #0097a7);
+      color: white;
+      font-weight: 600;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 188, 212, 0.3);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen px-4">
+  <div class="auth-wrapper w-full max-w-md">
+    <div id="authCard" class="auth-card">
+
+      <!-- Sign In -->
+      <div class="auth-face front flex flex-col justify-center">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i data-feather="log-in" class="w-8 h-8 text-cyan-600"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-cyan-900">Welcome Back</h2>
+          <p class="text-cyan-600 mt-2">Sign in to your account</p>
+        </div>
+        <form id="loginForm" class="space-y-4">
+          <input type="text" id="loginUsername" placeholder="Username" required class="input-field">
+          <input type="password" id="loginPassword" placeholder="Password" required class="input-field">
+          <button type="submit" class="btn-primary">Sign In</button>
+          <p class="text-sm text-center text-cyan-700 mt-4">
+            Don’t have an account?
+            <a href="#" id="goToSignup" class="text-cyan-600 font-semibold hover:underline">Sign Up</a>
+          </p>
+          <p id="loginMsg" class="text-center text-sm mt-2 text-cyan-700"></p>
+        </form>
+      </div>
+
+      <!-- Sign Up -->
+      <div class="auth-face back flex flex-col justify-center">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i data-feather="user-plus" class="w-8 h-8 text-cyan-600"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-cyan-900">Create Account</h2>
+          <p class="text-cyan-600 mt-2">Join Smart Surat today</p>
+        </div>
+        <form id="signupForm" class="space-y-4">
+          <input type="text" id="signupName" placeholder="Full Name" required class="input-field">
+          <input type="text" id="signupUsername" placeholder="Username" required class="input-field">
+          <input type="password" id="signupPassword" placeholder="Password" required class="input-field">
+          <button type="submit" class="btn-primary">Sign Up</button>
+          <p class="text-sm text-center text-cyan-700 mt-4">
+            Already have an account?
+            <a href="#" id="goToLogin" class="text-cyan-600 font-semibold hover:underline">Sign In</a>
+          </p>
+          <p id="signupMsg" class="text-center text-sm mt-2 text-cyan-700"></p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    feather.replace();
+    
+    const card = document.getElementById('authCard');
+    document.getElementById('goToSignup').onclick = e => { e.preventDefault(); card.classList.add('flipped'); };
+    document.getElementById('goToLogin').onclick = e => { e.preventDefault(); card.classList.remove('flipped'); };
+
+    // Auth guard
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      // Auto-redirect based on role
+      if (user.role === 'admin') {
+        window.location.href = 'admin.html';
+      } else {
+        window.location.href = 'dashboard.html';
+      }
+    }
+
+    // Toggle password visibility - Login
+    const togglePassword = document.getElementById('togglePassword');
+    const loginPassword = document.getElementById('loginPassword');
+    if (togglePassword) {
+      togglePassword.addEventListener('click', () => {
+        const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+        loginPassword.setAttribute('type', type);
+        const icon = togglePassword.querySelector('i');
+        icon.setAttribute('data-feather', type === 'password' ? 'eye' : 'eye-off');
+        feather.replace();
+      });
+    }
+
+    // Toggle password visibility - Signup
+    const toggleSignupPassword = document.getElementById('toggleSignupPassword');
+    const signupPassword = document.getElementById('signupPassword');
+    if (toggleSignupPassword) {
+      toggleSignupPassword.addEventListener('click', () => {
+        const type = signupPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+        signupPassword.setAttribute('type', type);
+        const icon = toggleSignupPassword.querySelector('i');
+        icon.setAttribute('data-feather', type === 'password' ? 'eye' : 'eye-off');
+        feather.replace();
+      });
+    }
+
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      if (!username || !password) {
+        document.getElementById('loginMsg').textContent = '❌ Username and password are required';
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const result = await response.json();
+        
+        if (response.ok) {
+          localStorage.setItem('user', JSON.stringify(result.user));
+          document.getElementById('loginMsg').textContent = '✅ Login successful! Redirecting...';
+          
+          // ✅ Auto-redirect based on role
+          if (result.user.role === 'admin') {
+            setTimeout(() => window.location.href = 'admin.html', 1000);
+          } else {
+            setTimeout(() => window.location.href = 'dashboard.html', 1000);
+          }
+        } else {
+          document.getElementById('loginMsg').textContent = `❌ ${result.error || 'Invalid credentials'}`;
+        }
+      } catch (error) {
+        document.getElementById('loginMsg').textContent = '❌ Network error. Please try again.';
+      }
+    });
+
+    // Signup
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('signupName').value.trim();
+      const username = document.getElementById('signupUsername').value.trim();
+      const password = document.getElementById('signupPassword').value;
+
+      if (!name || !username || !password) {
+        document.getElementById('signupMsg').textContent = '❌ All fields are required';
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, username, password })
+        });
+        const result = await response.json();
+        
+        if (response.ok) {
+          localStorage.setItem('user', JSON.stringify(result.user));
+          document.getElementById('signupMsg').textContent = '✅ Account created! Redirecting...';
+          setTimeout(() => window.location.href = 'dashboard.html', 1000);
+        } else {
+          document.getElementById('signupMsg').textContent = `❌ ${result.error || 'Registration failed'}`;
+        }
+      } catch (error) {
+        document.getElementById('signupMsg').textContent = '❌ Network error. Please try again.';
+      }
+    });
+  </script>
+</body>
+</html>

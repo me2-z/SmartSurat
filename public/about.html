@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Smart Surat City Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar { transition: all 0.3s ease; }
+        .btn-primary {
+            background: linear-gradient(135deg, #00bcd4, #0097a7);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 188, 212, 0.3);
+        }
+        .about-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e0f7fa;
+        }
+        .about-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.1);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-cyan-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <button id="hambtn" class="md:hidden text-cyan-800 hover:text-cyan-600 focus:outline-none mr-4 p-2 rounded-lg hover:bg-cyan-50">
+                        <i data-feather="menu"></i>
+                    </button>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyan-500 to-cyan-700 rounded-lg flex items-center justify-center mr-3">
+                            <i data-feather="info" class="text-white w-5 h-5"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-cyan-900">About</span>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-cyan-800 hover:text-cyan-600 font-medium">Home</a>
+                    <a href="raise-complaint.html" class="text-cyan-800 hover:text-cyan-600 font-medium">Raise Complaint</a>
+                    <a href="dashboard.html" class="text-cyan-800 hover:text-cyan-600 font-medium">Dashboard</a>
+                    <a href="about.html" class="text-cyan-600 font-semibold border-b-2 border-cyan-500">About</a>
+                </nav>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="auth.html" class="text-cyan-800 hover:text-cyan-600 font-medium p-2 rounded-lg hover:bg-cyan-50">
+                        <i data-feather="user" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full w-72 bg-white shadow-2xl z-50 transition-transform duration-300 ease-in-out border-r border-cyan-100">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-cyan-100">
+            <h2 class="text-xl font-bold text-cyan-900">Smart Surat Portal</h2>
+            <button id="closeSidebar" class="text-cyan-500 hover:text-cyan-700 focus:outline-none p-2 rounded-lg hover:bg-cyan-50">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <nav class="p-6">
+            <ul class="space-y-4">
+                <li><a href="index.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="home" class="mr-4 w-5 h-5"></i> Home</a></li>
+                <li><a href="raise-complaint.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="edit-3" class="mr-4 w-5 h-5"></i> Raise Complaint</a></li>
+                <li><a href="dashboard.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-cyan-50 text-cyan-800 font-medium"><i data-feather="bar-chart-2" class="mr-4 w-5 h-5"></i> Dashboard</a></li>
+                <li><a href="about.html" class="flex items-center px-4 py-3 rounded-lg bg-cyan-50 text-cyan-700 font-semibold"><i data-feather="info" class="mr-4 w-5 h-5"></i> About</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-30 z-40"></div>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-cyan-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-white bg-opacity-20"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center" data-aos="fade-up">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">About Smart Surat</h1>
+                <p class="text-xl md:text-2xl text-cyan-800 mb-12 max-w-3xl mx-auto">Empowering citizens of Surat to participate in city governance through technology. Building a smarter, cleaner, and more responsive urban environment.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Mission Section -->
+        <section class="mb-16" data-aos="fade-up">
+            <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 border border-cyan-100">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-cyan-900 mb-4">Our Mission</h2>
+                    <p class="text-xl text-cyan-700 max-w-2xl mx-auto">To bridge the gap between citizens and municipal authorities, enabling efficient reporting and resolution of civic issues for a sustainable Surat.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="about-card bg-cyan-50 p-6 rounded-xl">
+                        <i data-feather="users" class="w-12 h-12 text-cyan-600 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold text-cyan-900 mb-3 text-center">Citizen Empowerment</h3>
+                        <p class="text-cyan-700 text-center">We provide tools for residents to voice concerns and track progress, fostering community involvement in city development.</p>
+                    </div>
+                    <div class="about-card bg-cyan-50 p-6 rounded-xl">
+                        <i data-feather="settings" class="w-12 h-12 text-green-600 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold text-cyan-900 mb-3 text-center">Efficient Governance</h3>
+                        <p class="text-cyan-700 text-center">Authorities gain real-time insights to prioritize and resolve issues swiftly, improving service delivery across Surat.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Info Section -->
+        <section class="mb-16" data-aos="fade-up" data-aos-delay="100">
+            <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 border border-cyan-100">
+                <h2 class="text-3xl font-bold text-cyan-900 mb-6 text-center">About This Project</h2>
+                <p class="text-lg text-cyan-700 mb-8 text-center max-w-3xl mx-auto">This Smart Surat City Portal is a demo application designed to simulate the complaint filing and tracking process for civic issues. It uses client-side storage (localStorage) to manage data for demonstration purposes only. In a real-world implementation, this would integrate with secure backend services, databases, and authentication systems provided by the Surat Municipal Corporation.</p>
+                <div class="grid md:grid-cols-2 gap-8 text-center">
+                    <div>
+                        <h3 class="text-xl font-semibold text-cyan-900 mb-2">Demo Features</h3>
+                        <ul class="text-cyan-700 space-y-2">
+                            <li>• Easy complaint submission with categories and photo uploads</li>
+                            <li>• Real-time dashboard for tracking status</li>
+                            <li>• Local data persistence for testing</li>
+                            <li>• Responsive design for all devices</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-cyan-900 mb-2">Limitations</h3>
+                        <ul class="text-cyan-700 space-y-2">
+                            <li>• Data is not persisted across devices or browsers</li>
+                            <li>• No real server integration or notifications</li>
+                            <li>• Admin functionality is simulated (client-side only)</li>
+                            <li>• For production, contact municipal authorities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="mb-16" data-aos="fade-up" data-aos-delay="200">
+            <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 border border-cyan-100">
+                <h2 class="text-3xl font-bold text-cyan-900 mb-6 text-center">Get in Touch</h2>
+                <p class="text-lg text-cyan-700 mb-8 text-center">For inquiries, support, or to learn more about integrating this system, reach out to the Surat Municipal Corporation.</p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="mail" class="w-6 h-6 text-cyan-600"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-cyan-900 mb-2">Email</h3>
+                        <p class="text-cyan-700">support@smartsurat.gov.in</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="phone" class="w-6 h-6 text-cyan-600"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-cyan-900 mb-2">Phone</h3>
+                        <p class="text-cyan-700">+91 261-1234567</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="map-pin" class="w-6 h-6 text-cyan-600"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-cyan-900 mb-2">Address</h3>
+                        <p class="text-cyan-700">Surat Municipal Corporation, Surat, Gujarat, India</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-cyan-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center mr-3">
+                            <i data-feather="droplet" class="text-white w-5 h-5"></i>
+                        </div>
+                        <span class="text-xl font-bold">Smart Surat</span>
+                    </div>
+                    <p class="text-cyan-200">Building a smarter, cleaner Surat through citizen empowerment and efficient services.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-cyan-200">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="raise-complaint.html" class="hover:text-white transition-colors">Raise Complaint</a></li>
+                        <li><a href="dashboard.html" class="hover:text-white transition-colors">Dashboard</a></li>
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-cyan-200">
+                        <li><a href="#" class="hover:text-white transition-colors">Garbage Management</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Streetlights</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Water Supply</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Drainage</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <p class="text-cyan-200 mb-2">Surat Municipal Corporation</p>
+                    <p class="text-cyan-200">Email: support@smartsurat.gov.in</p>
+                    <p class="text-cyan-200">Phone: +91 261-1234567</p>
+                </div>
+            </div>
+            <div class="border-t border-cyan-800 mt-8 pt-8 text-center text-cyan-300">
+                <p>&copy; 2025 Smart Surat City Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 800, once: true });
+        feather.replace();
+        
+        // Mobile menu toggle
+        const hambtn = document.getElementById('hambtn');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const overlay = document.getElementById('overlay');
+
+        hambtn?.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        });
+
+        closeSidebar?.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        overlay?.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
