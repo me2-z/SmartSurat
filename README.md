@@ -16,7 +16,7 @@ A local demo portal for citizens \& admins of Surat — built with HTML/CSS/JS f
 
 \## 📁 Project Structure
 
-!\[image alt](https://github.com/me2-z/SmartSurat/blob/ce1645ab67542c6894e453e2f55ce84f49bba84e/projecttree.png)
+![image alt](https://github.com/me2-z/SmartSurat/blob/ce1645ab67542c6894e453e2f55ce84f49bba84e/projecttree.png)
 
 
 
@@ -63,5 +63,6 @@ A local demo portal for citizens \& admins of Surat — built with HTML/CSS/JS f
 
 
 🚀 Happy coding! 🌟
+
 
 
